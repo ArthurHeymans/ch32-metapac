@@ -1036,6 +1036,20 @@
                     array: None,
                     enumm: None,
                 },
+                Field {
+                    name: "iple",
+                    description: Some(
+                        "10M PHY link status change interrupt enable",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 31,
+                        },
+                    ),
+                    bit_size: 1,
+                    array: None,
+                    enumm: None,
+                },
             ],
         },
         FieldSet {
@@ -1635,7 +1649,7 @@
                 Field {
                     name: "ipls",
                     description: Some(
-                        "10M PHY physical layer variation",
+                        "10M PHY physical layer status (write 1 to clear)",
                     ),
                     bit_offset: BitOffset::Regular(
                         RegularBitOffset {
@@ -2207,14 +2221,14 @@
                 Field {
                     name: "fes",
                     description: Some(
-                        "Fast Ethernet speed (1 = 100 Mbps, 0 = 10 Mbps)",
+                        "Ethernet speed: 00=10M, 01=100M, 10=1G, 11=reserved",
                     ),
                     bit_offset: BitOffset::Regular(
                         RegularBitOffset {
                             offset: 14,
                         },
                     ),
-                    bit_size: 1,
+                    bit_size: 2,
                     array: None,
                     enumm: None,
                 },
