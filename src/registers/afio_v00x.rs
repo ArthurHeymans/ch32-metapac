@@ -1,123 +1,213 @@
-use crate::metadata::ir::*;
-pub(crate) static REGISTERS: IR = IR {
-    blocks: &[Block {
-        name: "Afio",
-        extends: None,
-        description: Some("Alternate function I/O."),
-        items: &[
-            BlockItem {
-                name: "exticr",
-                description: Some("External interrupt configuration register (AFIO_EXTICR)."),
-                array: None,
-                byte_offset: 0x8,
-                inner: BlockItemInner::Register(Register {
-                    access: Access::ReadWrite,
-                    bit_size: 32,
-                    fieldset: Some("Exticr"),
-                }),
-            },
-            BlockItem {
-                name: "pcfr1",
-                description: Some("AF remap and debug I/O configuration register (AFIO_PCFR1)."),
-                array: None,
-                byte_offset: 0xc,
-                inner: BlockItemInner::Register(Register {
-                    access: Access::ReadWrite,
-                    bit_size: 32,
-                    fieldset: Some("Pcfr1"),
-                }),
-            },
-        ],
-    }],
+
+                    use crate::metadata::ir::*;
+                    pub(crate) static REGISTERS: IR = IR {
+    blocks: &[
+        Block {
+            name: "Afio",
+            extends: None,
+            description: Some(
+                "Alternate function I/O.",
+            ),
+            items: &[
+                BlockItem {
+                    name: "exticr",
+                    description: Some(
+                        "External interrupt configuration register (AFIO_EXTICR).",
+                    ),
+                    array: None,
+                    byte_offset: 0x8,
+                    inner: BlockItemInner::Register(
+                        Register {
+                            access: Access::ReadWrite,
+                            bit_size: 32,
+                            fieldset: Some(
+                                "Exticr",
+                            ),
+                        },
+                    ),
+                },
+                BlockItem {
+                    name: "pcfr1",
+                    description: Some(
+                        "AF remap and debug I/O configuration register (AFIO_PCFR1).",
+                    ),
+                    array: None,
+                    byte_offset: 0xc,
+                    inner: BlockItemInner::Register(
+                        Register {
+                            access: Access::ReadWrite,
+                            bit_size: 32,
+                            fieldset: Some(
+                                "Pcfr1",
+                            ),
+                        },
+                    ),
+                },
+            ],
+        },
+    ],
     fieldsets: &[
         FieldSet {
             name: "Exticr",
             extends: None,
-            description: Some("External interrupt configuration register (AFIO_EXTICR)."),
+            description: Some(
+                "External interrupt configuration register (AFIO_EXTICR).",
+            ),
             bit_size: 32,
-            fields: &[Field {
-                name: "exti",
-                description: Some("EXTI configuration."),
-                bit_offset: BitOffset::Regular(RegularBitOffset { offset: 0 }),
-                bit_size: 2,
-                array: Some(Array::Regular(RegularArray { len: 8, stride: 2 })),
-                enumm: None,
-            }],
+            fields: &[
+                Field {
+                    name: "exti",
+                    description: Some(
+                        "EXTI configuration.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 0,
+                        },
+                    ),
+                    bit_size: 2,
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 8,
+                                stride: 2,
+                            },
+                        ),
+                    ),
+                    enumm: None,
+                },
+            ],
         },
         FieldSet {
             name: "Pcfr1",
             extends: None,
-            description: Some("AF remap and debug I/O configuration register (AFIO_PCFR1)."),
+            description: Some(
+                "AF remap and debug I/O configuration register (AFIO_PCFR1).",
+            ),
             bit_size: 32,
             fields: &[
                 Field {
                     name: "spi1_rm",
-                    description: Some("SPI1 remapping."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 0 }),
+                    description: Some(
+                        "SPI1 remapping.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 0,
+                        },
+                    ),
                     bit_size: 3,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "i2c1_rm",
-                    description: Some("I2C1 remapping."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 3 }),
+                    description: Some(
+                        "I2C1 remapping.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 3,
+                        },
+                    ),
                     bit_size: 3,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "usart1_rm",
-                    description: Some("USART1 remapping."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 6 }),
+                    description: Some(
+                        "USART1 remapping.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 6,
+                        },
+                    ),
                     bit_size: 4,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "tim1_rm",
-                    description: Some("TIM1 remapping."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 10 }),
+                    description: Some(
+                        "TIM1 remapping.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 10,
+                        },
+                    ),
                     bit_size: 4,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "tim2_rm",
-                    description: Some("TIM2 remapping."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 14 }),
+                    description: Some(
+                        "TIM2 remapping.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 14,
+                        },
+                    ),
                     bit_size: 3,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "pa1pa2_rm",
-                    description: Some("Port A1/Port A2 mapping on OSCIN/OSCOUT."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 17 }),
+                    description: Some(
+                        "Port A1/Port A2 mapping on OSCIN/OSCOUT.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 17,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "adc_etrginj_rm",
-                    description: Some("ADC 1 External trigger injected conversion remapping."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 18 }),
+                    description: Some(
+                        "ADC 1 External trigger injected conversion remapping.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 18,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "adc_etrgreg_rm",
-                    description: Some("ADC 1 external trigger regular conversion remapping."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 19 }),
+                    description: Some(
+                        "ADC 1 external trigger regular conversion remapping.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 19,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "usart2_rm",
-                    description: Some("USART2 remapping."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 20 }),
+                    description: Some(
+                        "USART2 remapping.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 20,
+                        },
+                    ),
                     bit_size: 3,
                     array: None,
                     enumm: None,
@@ -127,7 +217,11 @@ pub(crate) static REGISTERS: IR = IR {
                     description: Some(
                         "configure the I/O port with the SW function and tracing function.",
                     ),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 24 }),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 24,
+                        },
+                    ),
                     bit_size: 3,
                     array: None,
                     enumm: None,
@@ -137,3 +231,4 @@ pub(crate) static REGISTERS: IR = IR {
     ],
     enums: &[],
 };
+                

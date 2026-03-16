@@ -1,318 +1,565 @@
-use crate::metadata::ir::*;
-pub(crate) static REGISTERS: IR = IR {
-    blocks: &[Block {
-        name: "Can",
-        extends: None,
-        description: Some("Controller area network."),
-        items: &[
-            BlockItem {
-                name: "ctlr",
-                description: Some("CAN Master control register."),
-                array: None,
-                byte_offset: 0x0,
-                inner: BlockItemInner::Register(Register {
-                    access: Access::ReadWrite,
-                    bit_size: 32,
-                    fieldset: Some("Ctlr"),
-                }),
-            },
-            BlockItem {
-                name: "statr",
-                description: Some("CAN master status register."),
-                array: None,
-                byte_offset: 0x4,
-                inner: BlockItemInner::Register(Register {
-                    access: Access::ReadWrite,
-                    bit_size: 32,
-                    fieldset: Some("Statr"),
-                }),
-            },
-            BlockItem {
-                name: "tstatr",
-                description: Some("CAN transmit status register."),
-                array: None,
-                byte_offset: 0x8,
-                inner: BlockItemInner::Register(Register {
-                    access: Access::ReadWrite,
-                    bit_size: 32,
-                    fieldset: Some("Tstatr"),
-                }),
-            },
-            BlockItem {
-                name: "rfifo",
-                description: Some("CAN receive FIFO register."),
-                array: Some(Array::Regular(RegularArray { len: 2, stride: 32 })),
-                byte_offset: 0xc,
-                inner: BlockItemInner::Register(Register {
-                    access: Access::ReadWrite,
-                    bit_size: 32,
-                    fieldset: Some("Rfifo"),
-                }),
-            },
-            BlockItem {
-                name: "intenr",
-                description: Some("CAN interrupt enable register."),
-                array: None,
-                byte_offset: 0x14,
-                inner: BlockItemInner::Register(Register {
-                    access: Access::ReadWrite,
-                    bit_size: 32,
-                    fieldset: Some("Intenr"),
-                }),
-            },
-            BlockItem {
-                name: "errsr",
-                description: Some("CAN error status register."),
-                array: None,
-                byte_offset: 0x18,
-                inner: BlockItemInner::Register(Register {
-                    access: Access::ReadWrite,
-                    bit_size: 32,
-                    fieldset: Some("Errsr"),
-                }),
-            },
-            BlockItem {
-                name: "btimr",
-                description: Some("CAN bit timing register."),
-                array: None,
-                byte_offset: 0x1c,
-                inner: BlockItemInner::Register(Register {
-                    access: Access::ReadWrite,
-                    bit_size: 32,
-                    fieldset: Some("Btimr"),
-                }),
-            },
-            BlockItem {
-                name: "ttctlr",
-                description: Some("CAN time trigger control register."),
-                array: None,
-                byte_offset: 0x20,
-                inner: BlockItemInner::Register(Register {
-                    access: Access::ReadWrite,
-                    bit_size: 32,
-                    fieldset: Some("Ttctlr"),
-                }),
-            },
-            BlockItem {
-                name: "ttcnt",
-                description: Some("CAN Time Trigger Count Value Register."),
-                array: None,
-                byte_offset: 0x24,
-                inner: BlockItemInner::Register(Register {
-                    access: Access::ReadWrite,
-                    bit_size: 16,
-                    fieldset: None,
-                }),
-            },
-            BlockItem {
-                name: "txmir",
-                description: Some("CAN TX mailbox identifier register."),
-                array: Some(Array::Regular(RegularArray { len: 3, stride: 16 })),
-                byte_offset: 0x180,
-                inner: BlockItemInner::Register(Register {
-                    access: Access::ReadWrite,
-                    bit_size: 32,
-                    fieldset: Some("Txmir"),
-                }),
-            },
-            BlockItem {
-                name: "txmdtr",
-                description: Some("CAN mailbox data length control and time stamp register."),
-                array: Some(Array::Regular(RegularArray { len: 3, stride: 16 })),
-                byte_offset: 0x184,
-                inner: BlockItemInner::Register(Register {
-                    access: Access::ReadWrite,
-                    bit_size: 32,
-                    fieldset: Some("Txmdtr"),
-                }),
-            },
-            BlockItem {
-                name: "txmdlr",
-                description: Some("CAN mailbox data low register."),
-                array: Some(Array::Regular(RegularArray { len: 3, stride: 16 })),
-                byte_offset: 0x188,
-                inner: BlockItemInner::Register(Register {
-                    access: Access::ReadWrite,
-                    bit_size: 32,
-                    fieldset: Some("Txmdlr"),
-                }),
-            },
-            BlockItem {
-                name: "txmdhr",
-                description: Some("CAN mailbox data high register."),
-                array: Some(Array::Regular(RegularArray { len: 3, stride: 16 })),
-                byte_offset: 0x18c,
-                inner: BlockItemInner::Register(Register {
-                    access: Access::ReadWrite,
-                    bit_size: 32,
-                    fieldset: Some("Txmdhr"),
-                }),
-            },
-            BlockItem {
-                name: "rxmir",
-                description: Some("CAN receive FIFO mailbox identifier register."),
-                array: Some(Array::Regular(RegularArray { len: 2, stride: 16 })),
-                byte_offset: 0x1b0,
-                inner: BlockItemInner::Register(Register {
-                    access: Access::Read,
-                    bit_size: 32,
-                    fieldset: Some("Rxmir"),
-                }),
-            },
-            BlockItem {
-                name: "rxmdtr",
-                description: Some(
-                    "CAN receive FIFO mailbox data length control and time stamp register.",
-                ),
-                array: Some(Array::Regular(RegularArray { len: 2, stride: 16 })),
-                byte_offset: 0x1b4,
-                inner: BlockItemInner::Register(Register {
-                    access: Access::Read,
-                    bit_size: 32,
-                    fieldset: Some("Rxmdtr"),
-                }),
-            },
-            BlockItem {
-                name: "rxmdlr",
-                description: Some("CAN receive FIFO mailbox data low register."),
-                array: Some(Array::Regular(RegularArray { len: 2, stride: 16 })),
-                byte_offset: 0x1b8,
-                inner: BlockItemInner::Register(Register {
-                    access: Access::Read,
-                    bit_size: 32,
-                    fieldset: Some("Rxmdlr"),
-                }),
-            },
-            BlockItem {
-                name: "rxmdhr",
-                description: Some("CAN receive FIFO mailbox data high register."),
-                array: Some(Array::Regular(RegularArray { len: 2, stride: 16 })),
-                byte_offset: 0x1bc,
-                inner: BlockItemInner::Register(Register {
-                    access: Access::Read,
-                    bit_size: 32,
-                    fieldset: Some("Rxmdhr"),
-                }),
-            },
-            BlockItem {
-                name: "fctlr",
-                description: Some("CAN filter master register."),
-                array: None,
-                byte_offset: 0x200,
-                inner: BlockItemInner::Register(Register {
-                    access: Access::ReadWrite,
-                    bit_size: 32,
-                    fieldset: Some("Fctlr"),
-                }),
-            },
-            BlockItem {
-                name: "fmcfgr",
-                description: Some("CAN filter mode register."),
-                array: None,
-                byte_offset: 0x204,
-                inner: BlockItemInner::Register(Register {
-                    access: Access::ReadWrite,
-                    bit_size: 32,
-                    fieldset: Some("Fmcfgr"),
-                }),
-            },
-            BlockItem {
-                name: "fscfgr",
-                description: Some("CAN filter scale register."),
-                array: None,
-                byte_offset: 0x20c,
-                inner: BlockItemInner::Register(Register {
-                    access: Access::ReadWrite,
-                    bit_size: 32,
-                    fieldset: Some("Fscfgr"),
-                }),
-            },
-            BlockItem {
-                name: "fafifor",
-                description: Some("CAN filter FIFO assignment register."),
-                array: None,
-                byte_offset: 0x214,
-                inner: BlockItemInner::Register(Register {
-                    access: Access::ReadWrite,
-                    bit_size: 32,
-                    fieldset: Some("Fafifor"),
-                }),
-            },
-            BlockItem {
-                name: "fwr",
-                description: Some("CAN filter activation register."),
-                array: None,
-                byte_offset: 0x21c,
-                inner: BlockItemInner::Register(Register {
-                    access: Access::ReadWrite,
-                    bit_size: 32,
-                    fieldset: Some("Fwr"),
-                }),
-            },
-            BlockItem {
-                name: "fr",
-                description: Some("Filter bank 0 register 1."),
-                array: Some(Array::Regular(RegularArray { len: 56, stride: 4 })),
-                byte_offset: 0x240,
-                inner: BlockItemInner::Register(Register {
-                    access: Access::ReadWrite,
-                    bit_size: 32,
-                    fieldset: Some("Fr"),
-                }),
-            },
-        ],
-    }],
+
+                    use crate::metadata::ir::*;
+                    pub(crate) static REGISTERS: IR = IR {
+    blocks: &[
+        Block {
+            name: "Can",
+            extends: None,
+            description: Some(
+                "Controller area network.",
+            ),
+            items: &[
+                BlockItem {
+                    name: "ctlr",
+                    description: Some(
+                        "CAN Master control register.",
+                    ),
+                    array: None,
+                    byte_offset: 0x0,
+                    inner: BlockItemInner::Register(
+                        Register {
+                            access: Access::ReadWrite,
+                            bit_size: 32,
+                            fieldset: Some(
+                                "Ctlr",
+                            ),
+                        },
+                    ),
+                },
+                BlockItem {
+                    name: "statr",
+                    description: Some(
+                        "CAN master status register.",
+                    ),
+                    array: None,
+                    byte_offset: 0x4,
+                    inner: BlockItemInner::Register(
+                        Register {
+                            access: Access::ReadWrite,
+                            bit_size: 32,
+                            fieldset: Some(
+                                "Statr",
+                            ),
+                        },
+                    ),
+                },
+                BlockItem {
+                    name: "tstatr",
+                    description: Some(
+                        "CAN transmit status register.",
+                    ),
+                    array: None,
+                    byte_offset: 0x8,
+                    inner: BlockItemInner::Register(
+                        Register {
+                            access: Access::ReadWrite,
+                            bit_size: 32,
+                            fieldset: Some(
+                                "Tstatr",
+                            ),
+                        },
+                    ),
+                },
+                BlockItem {
+                    name: "rfifo",
+                    description: Some(
+                        "CAN receive FIFO register.",
+                    ),
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 2,
+                                stride: 32,
+                            },
+                        ),
+                    ),
+                    byte_offset: 0xc,
+                    inner: BlockItemInner::Register(
+                        Register {
+                            access: Access::ReadWrite,
+                            bit_size: 32,
+                            fieldset: Some(
+                                "Rfifo",
+                            ),
+                        },
+                    ),
+                },
+                BlockItem {
+                    name: "intenr",
+                    description: Some(
+                        "CAN interrupt enable register.",
+                    ),
+                    array: None,
+                    byte_offset: 0x14,
+                    inner: BlockItemInner::Register(
+                        Register {
+                            access: Access::ReadWrite,
+                            bit_size: 32,
+                            fieldset: Some(
+                                "Intenr",
+                            ),
+                        },
+                    ),
+                },
+                BlockItem {
+                    name: "errsr",
+                    description: Some(
+                        "CAN error status register.",
+                    ),
+                    array: None,
+                    byte_offset: 0x18,
+                    inner: BlockItemInner::Register(
+                        Register {
+                            access: Access::ReadWrite,
+                            bit_size: 32,
+                            fieldset: Some(
+                                "Errsr",
+                            ),
+                        },
+                    ),
+                },
+                BlockItem {
+                    name: "btimr",
+                    description: Some(
+                        "CAN bit timing register.",
+                    ),
+                    array: None,
+                    byte_offset: 0x1c,
+                    inner: BlockItemInner::Register(
+                        Register {
+                            access: Access::ReadWrite,
+                            bit_size: 32,
+                            fieldset: Some(
+                                "Btimr",
+                            ),
+                        },
+                    ),
+                },
+                BlockItem {
+                    name: "ttctlr",
+                    description: Some(
+                        "CAN time trigger control register.",
+                    ),
+                    array: None,
+                    byte_offset: 0x20,
+                    inner: BlockItemInner::Register(
+                        Register {
+                            access: Access::ReadWrite,
+                            bit_size: 32,
+                            fieldset: Some(
+                                "Ttctlr",
+                            ),
+                        },
+                    ),
+                },
+                BlockItem {
+                    name: "ttcnt",
+                    description: Some(
+                        "CAN Time Trigger Count Value Register.",
+                    ),
+                    array: None,
+                    byte_offset: 0x24,
+                    inner: BlockItemInner::Register(
+                        Register {
+                            access: Access::ReadWrite,
+                            bit_size: 16,
+                            fieldset: None,
+                        },
+                    ),
+                },
+                BlockItem {
+                    name: "txmir",
+                    description: Some(
+                        "CAN TX mailbox identifier register.",
+                    ),
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 3,
+                                stride: 16,
+                            },
+                        ),
+                    ),
+                    byte_offset: 0x180,
+                    inner: BlockItemInner::Register(
+                        Register {
+                            access: Access::ReadWrite,
+                            bit_size: 32,
+                            fieldset: Some(
+                                "Txmir",
+                            ),
+                        },
+                    ),
+                },
+                BlockItem {
+                    name: "txmdtr",
+                    description: Some(
+                        "CAN mailbox data length control and time stamp register.",
+                    ),
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 3,
+                                stride: 16,
+                            },
+                        ),
+                    ),
+                    byte_offset: 0x184,
+                    inner: BlockItemInner::Register(
+                        Register {
+                            access: Access::ReadWrite,
+                            bit_size: 32,
+                            fieldset: Some(
+                                "Txmdtr",
+                            ),
+                        },
+                    ),
+                },
+                BlockItem {
+                    name: "txmdlr",
+                    description: Some(
+                        "CAN mailbox data low register.",
+                    ),
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 3,
+                                stride: 16,
+                            },
+                        ),
+                    ),
+                    byte_offset: 0x188,
+                    inner: BlockItemInner::Register(
+                        Register {
+                            access: Access::ReadWrite,
+                            bit_size: 32,
+                            fieldset: Some(
+                                "Txmdlr",
+                            ),
+                        },
+                    ),
+                },
+                BlockItem {
+                    name: "txmdhr",
+                    description: Some(
+                        "CAN mailbox data high register.",
+                    ),
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 3,
+                                stride: 16,
+                            },
+                        ),
+                    ),
+                    byte_offset: 0x18c,
+                    inner: BlockItemInner::Register(
+                        Register {
+                            access: Access::ReadWrite,
+                            bit_size: 32,
+                            fieldset: Some(
+                                "Txmdhr",
+                            ),
+                        },
+                    ),
+                },
+                BlockItem {
+                    name: "rxmir",
+                    description: Some(
+                        "CAN receive FIFO mailbox identifier register.",
+                    ),
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 2,
+                                stride: 16,
+                            },
+                        ),
+                    ),
+                    byte_offset: 0x1b0,
+                    inner: BlockItemInner::Register(
+                        Register {
+                            access: Access::Read,
+                            bit_size: 32,
+                            fieldset: Some(
+                                "Rxmir",
+                            ),
+                        },
+                    ),
+                },
+                BlockItem {
+                    name: "rxmdtr",
+                    description: Some(
+                        "CAN receive FIFO mailbox data length control and time stamp register.",
+                    ),
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 2,
+                                stride: 16,
+                            },
+                        ),
+                    ),
+                    byte_offset: 0x1b4,
+                    inner: BlockItemInner::Register(
+                        Register {
+                            access: Access::Read,
+                            bit_size: 32,
+                            fieldset: Some(
+                                "Rxmdtr",
+                            ),
+                        },
+                    ),
+                },
+                BlockItem {
+                    name: "rxmdlr",
+                    description: Some(
+                        "CAN receive FIFO mailbox data low register.",
+                    ),
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 2,
+                                stride: 16,
+                            },
+                        ),
+                    ),
+                    byte_offset: 0x1b8,
+                    inner: BlockItemInner::Register(
+                        Register {
+                            access: Access::Read,
+                            bit_size: 32,
+                            fieldset: Some(
+                                "Rxmdlr",
+                            ),
+                        },
+                    ),
+                },
+                BlockItem {
+                    name: "rxmdhr",
+                    description: Some(
+                        "CAN receive FIFO mailbox data high register.",
+                    ),
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 2,
+                                stride: 16,
+                            },
+                        ),
+                    ),
+                    byte_offset: 0x1bc,
+                    inner: BlockItemInner::Register(
+                        Register {
+                            access: Access::Read,
+                            bit_size: 32,
+                            fieldset: Some(
+                                "Rxmdhr",
+                            ),
+                        },
+                    ),
+                },
+                BlockItem {
+                    name: "fctlr",
+                    description: Some(
+                        "CAN filter master register.",
+                    ),
+                    array: None,
+                    byte_offset: 0x200,
+                    inner: BlockItemInner::Register(
+                        Register {
+                            access: Access::ReadWrite,
+                            bit_size: 32,
+                            fieldset: Some(
+                                "Fctlr",
+                            ),
+                        },
+                    ),
+                },
+                BlockItem {
+                    name: "fmcfgr",
+                    description: Some(
+                        "CAN filter mode register.",
+                    ),
+                    array: None,
+                    byte_offset: 0x204,
+                    inner: BlockItemInner::Register(
+                        Register {
+                            access: Access::ReadWrite,
+                            bit_size: 32,
+                            fieldset: Some(
+                                "Fmcfgr",
+                            ),
+                        },
+                    ),
+                },
+                BlockItem {
+                    name: "fscfgr",
+                    description: Some(
+                        "CAN filter scale register.",
+                    ),
+                    array: None,
+                    byte_offset: 0x20c,
+                    inner: BlockItemInner::Register(
+                        Register {
+                            access: Access::ReadWrite,
+                            bit_size: 32,
+                            fieldset: Some(
+                                "Fscfgr",
+                            ),
+                        },
+                    ),
+                },
+                BlockItem {
+                    name: "fafifor",
+                    description: Some(
+                        "CAN filter FIFO assignment register.",
+                    ),
+                    array: None,
+                    byte_offset: 0x214,
+                    inner: BlockItemInner::Register(
+                        Register {
+                            access: Access::ReadWrite,
+                            bit_size: 32,
+                            fieldset: Some(
+                                "Fafifor",
+                            ),
+                        },
+                    ),
+                },
+                BlockItem {
+                    name: "fwr",
+                    description: Some(
+                        "CAN filter activation register.",
+                    ),
+                    array: None,
+                    byte_offset: 0x21c,
+                    inner: BlockItemInner::Register(
+                        Register {
+                            access: Access::ReadWrite,
+                            bit_size: 32,
+                            fieldset: Some(
+                                "Fwr",
+                            ),
+                        },
+                    ),
+                },
+                BlockItem {
+                    name: "fr",
+                    description: Some(
+                        "Filter bank 0 register 1.",
+                    ),
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 56,
+                                stride: 4,
+                            },
+                        ),
+                    ),
+                    byte_offset: 0x240,
+                    inner: BlockItemInner::Register(
+                        Register {
+                            access: Access::ReadWrite,
+                            bit_size: 32,
+                            fieldset: Some(
+                                "Fr",
+                            ),
+                        },
+                    ),
+                },
+            ],
+        },
+    ],
     fieldsets: &[
         FieldSet {
             name: "Btimr",
             extends: None,
-            description: Some("CAN bit timing register."),
+            description: Some(
+                "CAN bit timing register.",
+            ),
             bit_size: 32,
             fields: &[
                 Field {
                     name: "brp",
-                    description: Some("Baud rate prescaler."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 0 }),
+                    description: Some(
+                        "Baud rate prescaler.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 0,
+                        },
+                    ),
                     bit_size: 10,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "ts1",
-                    description: Some("Time segment 1."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 16 }),
+                    description: Some(
+                        "Time segment 1.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 16,
+                        },
+                    ),
                     bit_size: 4,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "ts2",
-                    description: Some("Time segment 2."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 20 }),
+                    description: Some(
+                        "Time segment 2.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 20,
+                        },
+                    ),
                     bit_size: 3,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "sjw",
-                    description: Some("Resynchronization jump width."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 24 }),
+                    description: Some(
+                        "Resynchronization jump width.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 24,
+                        },
+                    ),
                     bit_size: 2,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "lbkm",
-                    description: Some("Loop back mode (debug)."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 30 }),
+                    description: Some(
+                        "Loop back mode (debug).",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 30,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "silm",
-                    description: Some("Silent mode (debug)."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 31 }),
+                    description: Some(
+                        "Silent mode (debug).",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 31,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
@@ -322,85 +569,147 @@ pub(crate) static REGISTERS: IR = IR {
         FieldSet {
             name: "Ctlr",
             extends: None,
-            description: Some("CAN Master control register."),
+            description: Some(
+                "CAN Master control register.",
+            ),
             bit_size: 32,
             fields: &[
                 Field {
                     name: "inrq",
-                    description: Some("Initialization request."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 0 }),
+                    description: Some(
+                        "Initialization request.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 0,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "sleep",
-                    description: Some("Sleep mode request."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 1 }),
+                    description: Some(
+                        "Sleep mode request.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 1,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "txfp",
-                    description: Some("Transmit FIFO priority."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 2 }),
+                    description: Some(
+                        "Transmit FIFO priority.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 2,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "rflm",
-                    description: Some("Receive FIFO locked mode."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 3 }),
+                    description: Some(
+                        "Receive FIFO locked mode.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 3,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "nart",
-                    description: Some("No automatic retransmission."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 4 }),
+                    description: Some(
+                        "No automatic retransmission.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 4,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "awum",
-                    description: Some("Automatic wakeup mode."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 5 }),
+                    description: Some(
+                        "Automatic wakeup mode.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 5,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "abom",
-                    description: Some("Automatic bus-off management."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 6 }),
+                    description: Some(
+                        "Automatic bus-off management.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 6,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "ttcm",
-                    description: Some("Time triggered communication mode."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 7 }),
+                    description: Some(
+                        "Time triggered communication mode.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 7,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "reset",
-                    description: Some("Software master reset."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 15 }),
+                    description: Some(
+                        "Software master reset.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 15,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "dbf",
-                    description: Some("Debug freeze."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 16 }),
+                    description: Some(
+                        "Debug freeze.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 16,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
@@ -410,37 +719,63 @@ pub(crate) static REGISTERS: IR = IR {
         FieldSet {
             name: "Errsr",
             extends: None,
-            description: Some("CAN error status register."),
+            description: Some(
+                "CAN error status register.",
+            ),
             bit_size: 32,
             fields: &[
                 Field {
                     name: "ewgf",
-                    description: Some("Error warning flag."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 0 }),
+                    description: Some(
+                        "Error warning flag.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 0,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "epvf",
-                    description: Some("Error passive flag."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 1 }),
+                    description: Some(
+                        "Error passive flag.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 1,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "boff",
-                    description: Some("Bus-off flag."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 2 }),
+                    description: Some(
+                        "Bus-off flag.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 2,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "lec",
-                    description: Some("Last error code."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 4 }),
+                    description: Some(
+                        "Last error code.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 4,
+                        },
+                    ),
                     bit_size: 3,
                     array: None,
                     enumm: None,
@@ -450,15 +785,25 @@ pub(crate) static REGISTERS: IR = IR {
                     description: Some(
                         "Least significant byte of the 9-bit transmit error counter.",
                     ),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 16 }),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 16,
+                        },
+                    ),
                     bit_size: 8,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "rec",
-                    description: Some("Receive error counter."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 24 }),
+                    description: Some(
+                        "Receive error counter.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 24,
+                        },
+                    ),
                     bit_size: 8,
                     array: None,
                     enumm: None,
@@ -468,35 +813,66 @@ pub(crate) static REGISTERS: IR = IR {
         FieldSet {
             name: "Fafifor",
             extends: None,
-            description: Some("CAN filter FIFO assignment register."),
+            description: Some(
+                "CAN filter FIFO assignment register.",
+            ),
             bit_size: 32,
-            fields: &[Field {
-                name: "ffa",
-                description: Some("Filter FIFO assignment for filter 0."),
-                bit_offset: BitOffset::Regular(RegularBitOffset { offset: 0 }),
-                bit_size: 1,
-                array: Some(Array::Regular(RegularArray { len: 14, stride: 1 })),
-                enumm: None,
-            }],
+            fields: &[
+                Field {
+                    name: "ffa",
+                    description: Some(
+                        "Filter FIFO assignment for filter 0.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 0,
+                        },
+                    ),
+                    bit_size: 1,
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 14,
+                                stride: 1,
+                            },
+                        ),
+                    ),
+                    enumm: None,
+                },
+            ],
         },
         FieldSet {
             name: "Fctlr",
             extends: None,
-            description: Some("CAN filter master register."),
+            description: Some(
+                "CAN filter master register.",
+            ),
             bit_size: 32,
             fields: &[
                 Field {
                     name: "finit",
-                    description: Some("Filter init mode."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 0 }),
+                    description: Some(
+                        "Filter init mode.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 0,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "can2sb",
-                    description: Some("CAN2 start bank."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 8 }),
+                    description: Some(
+                        "CAN2 start bank.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 8,
+                        },
+                    ),
                     bit_size: 6,
                     array: None,
                     enumm: None,
@@ -506,173 +882,327 @@ pub(crate) static REGISTERS: IR = IR {
         FieldSet {
             name: "Fmcfgr",
             extends: None,
-            description: Some("CAN filter mode register."),
+            description: Some(
+                "CAN filter mode register.",
+            ),
             bit_size: 32,
-            fields: &[Field {
-                name: "fbm",
-                description: Some("Filter mode."),
-                bit_offset: BitOffset::Regular(RegularBitOffset { offset: 0 }),
-                bit_size: 1,
-                array: Some(Array::Regular(RegularArray { len: 14, stride: 1 })),
-                enumm: None,
-            }],
+            fields: &[
+                Field {
+                    name: "fbm",
+                    description: Some(
+                        "Filter mode.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 0,
+                        },
+                    ),
+                    bit_size: 1,
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 14,
+                                stride: 1,
+                            },
+                        ),
+                    ),
+                    enumm: None,
+                },
+            ],
         },
         FieldSet {
             name: "Fr",
             extends: None,
-            description: Some("Filter bank 24 register 2."),
+            description: Some(
+                "Filter bank 24 register 2.",
+            ),
             bit_size: 32,
-            fields: &[Field {
-                name: "fb",
-                description: Some("Filter bits."),
-                bit_offset: BitOffset::Regular(RegularBitOffset { offset: 0 }),
-                bit_size: 1,
-                array: Some(Array::Regular(RegularArray { len: 32, stride: 1 })),
-                enumm: None,
-            }],
+            fields: &[
+                Field {
+                    name: "fb",
+                    description: Some(
+                        "Filter bits.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 0,
+                        },
+                    ),
+                    bit_size: 1,
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 32,
+                                stride: 1,
+                            },
+                        ),
+                    ),
+                    enumm: None,
+                },
+            ],
         },
         FieldSet {
             name: "Fscfgr",
             extends: None,
-            description: Some("CAN filter scale register."),
+            description: Some(
+                "CAN filter scale register.",
+            ),
             bit_size: 32,
-            fields: &[Field {
-                name: "fsc",
-                description: Some("Filter scale configuration."),
-                bit_offset: BitOffset::Regular(RegularBitOffset { offset: 0 }),
-                bit_size: 1,
-                array: Some(Array::Regular(RegularArray { len: 14, stride: 1 })),
-                enumm: None,
-            }],
+            fields: &[
+                Field {
+                    name: "fsc",
+                    description: Some(
+                        "Filter scale configuration.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 0,
+                        },
+                    ),
+                    bit_size: 1,
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 14,
+                                stride: 1,
+                            },
+                        ),
+                    ),
+                    enumm: None,
+                },
+            ],
         },
         FieldSet {
             name: "Fwr",
             extends: None,
-            description: Some("CAN filter activation register."),
+            description: Some(
+                "CAN filter activation register.",
+            ),
             bit_size: 32,
-            fields: &[Field {
-                name: "fact",
-                description: Some("Filter active."),
-                bit_offset: BitOffset::Regular(RegularBitOffset { offset: 0 }),
-                bit_size: 1,
-                array: Some(Array::Regular(RegularArray { len: 14, stride: 1 })),
-                enumm: None,
-            }],
+            fields: &[
+                Field {
+                    name: "fact",
+                    description: Some(
+                        "Filter active.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 0,
+                        },
+                    ),
+                    bit_size: 1,
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 14,
+                                stride: 1,
+                            },
+                        ),
+                    ),
+                    enumm: None,
+                },
+            ],
         },
         FieldSet {
             name: "Intenr",
             extends: None,
-            description: Some("CAN interrupt enable register."),
+            description: Some(
+                "CAN interrupt enable register.",
+            ),
             bit_size: 32,
             fields: &[
                 Field {
                     name: "tmeie",
-                    description: Some("Transmit mailbox empty interrupt enable."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 0 }),
+                    description: Some(
+                        "Transmit mailbox empty interrupt enable.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 0,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "fmpie0",
-                    description: Some("FIFO message pending interrupt enable."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 1 }),
+                    description: Some(
+                        "FIFO message pending interrupt enable.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 1,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "ffie0",
-                    description: Some("FIFO full interrupt enable."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 2 }),
+                    description: Some(
+                        "FIFO full interrupt enable.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 2,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "fovie0",
-                    description: Some("FIFO overrun interrupt enable."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 3 }),
+                    description: Some(
+                        "FIFO overrun interrupt enable.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 3,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "fmpie1",
-                    description: Some("FIFO message pending interrupt enable."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 4 }),
+                    description: Some(
+                        "FIFO message pending interrupt enable.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 4,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "ffie1",
-                    description: Some("FIFO full interrupt enable."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 5 }),
+                    description: Some(
+                        "FIFO full interrupt enable.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 5,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "fovie1",
-                    description: Some("FIFO overrun interrupt enable."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 6 }),
+                    description: Some(
+                        "FIFO overrun interrupt enable.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 6,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "ewgie",
-                    description: Some("Error warning interrupt enable."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 8 }),
+                    description: Some(
+                        "Error warning interrupt enable.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 8,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "epvie",
-                    description: Some("Error passive interrupt enable."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 9 }),
+                    description: Some(
+                        "Error passive interrupt enable.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 9,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "bofie",
-                    description: Some("Bus-off interrupt enable."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 10 }),
+                    description: Some(
+                        "Bus-off interrupt enable.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 10,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "lecie",
-                    description: Some("Last error code interrupt enable."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 11 }),
+                    description: Some(
+                        "Last error code interrupt enable.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 11,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "errie",
-                    description: Some("Error interrupt enable."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 15 }),
+                    description: Some(
+                        "Error interrupt enable.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 15,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "wkuie",
-                    description: Some("Wakeup interrupt enable."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 16 }),
+                    description: Some(
+                        "Wakeup interrupt enable.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 16,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "slkie",
-                    description: Some("Sleep interrupt enable."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 17 }),
+                    description: Some(
+                        "Sleep interrupt enable.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 17,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
@@ -682,37 +1212,63 @@ pub(crate) static REGISTERS: IR = IR {
         FieldSet {
             name: "Rfifo",
             extends: None,
-            description: Some("CAN receive FIFO register."),
+            description: Some(
+                "CAN receive FIFO register.",
+            ),
             bit_size: 32,
             fields: &[
                 Field {
                     name: "fmp",
-                    description: Some("FIFO message pending."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 0 }),
+                    description: Some(
+                        "FIFO message pending.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 0,
+                        },
+                    ),
                     bit_size: 2,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "full",
-                    description: Some("FIFO full."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 3 }),
+                    description: Some(
+                        "FIFO full.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 3,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "fovr",
-                    description: Some("FIFO overrun."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 4 }),
+                    description: Some(
+                        "FIFO overrun.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 4,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "rfom",
-                    description: Some("Release FIFO output mailbox."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 5 }),
+                    description: Some(
+                        "Release FIFO output mailbox.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 5,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
@@ -722,30 +1278,64 @@ pub(crate) static REGISTERS: IR = IR {
         FieldSet {
             name: "Rxmdhr",
             extends: None,
-            description: Some("CAN receive FIFO mailbox data high register."),
+            description: Some(
+                "CAN receive FIFO mailbox data high register.",
+            ),
             bit_size: 32,
-            fields: &[Field {
-                name: "data",
-                description: Some("DATA4."),
-                bit_offset: BitOffset::Regular(RegularBitOffset { offset: 0 }),
-                bit_size: 8,
-                array: Some(Array::Regular(RegularArray { len: 4, stride: 8 })),
-                enumm: None,
-            }],
+            fields: &[
+                Field {
+                    name: "data",
+                    description: Some(
+                        "DATA4.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 0,
+                        },
+                    ),
+                    bit_size: 8,
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 4,
+                                stride: 8,
+                            },
+                        ),
+                    ),
+                    enumm: None,
+                },
+            ],
         },
         FieldSet {
             name: "Rxmdlr",
             extends: None,
-            description: Some("CAN receive FIFO mailbox data low register."),
+            description: Some(
+                "CAN receive FIFO mailbox data low register.",
+            ),
             bit_size: 32,
-            fields: &[Field {
-                name: "data",
-                description: Some("Data Byte 0."),
-                bit_offset: BitOffset::Regular(RegularBitOffset { offset: 0 }),
-                bit_size: 8,
-                array: Some(Array::Regular(RegularArray { len: 4, stride: 8 })),
-                enumm: None,
-            }],
+            fields: &[
+                Field {
+                    name: "data",
+                    description: Some(
+                        "Data Byte 0.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 0,
+                        },
+                    ),
+                    bit_size: 8,
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 4,
+                                stride: 8,
+                            },
+                        ),
+                    ),
+                    enumm: None,
+                },
+            ],
         },
         FieldSet {
             name: "Rxmdtr",
@@ -757,24 +1347,42 @@ pub(crate) static REGISTERS: IR = IR {
             fields: &[
                 Field {
                     name: "dlc",
-                    description: Some("Data length code."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 0 }),
+                    description: Some(
+                        "Data length code.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 0,
+                        },
+                    ),
                     bit_size: 4,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "fmi",
-                    description: Some("Filter match index."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 8 }),
+                    description: Some(
+                        "Filter match index.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 8,
+                        },
+                    ),
                     bit_size: 8,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "time",
-                    description: Some("Message time stamp."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 16 }),
+                    description: Some(
+                        "Message time stamp.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 16,
+                        },
+                    ),
                     bit_size: 16,
                     array: None,
                     enumm: None,
@@ -784,37 +1392,63 @@ pub(crate) static REGISTERS: IR = IR {
         FieldSet {
             name: "Rxmir",
             extends: None,
-            description: Some("CAN receive FIFO mailbox identifier register."),
+            description: Some(
+                "CAN receive FIFO mailbox identifier register.",
+            ),
             bit_size: 32,
             fields: &[
                 Field {
                     name: "rtr",
-                    description: Some("Remote transmission request."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 1 }),
+                    description: Some(
+                        "Remote transmission request.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 1,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "ide",
-                    description: Some("Identifier extension."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 2 }),
+                    description: Some(
+                        "Identifier extension.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 2,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "exid",
-                    description: Some("extended identifier."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 3 }),
+                    description: Some(
+                        "extended identifier.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 3,
+                        },
+                    ),
                     bit_size: 18,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "stid",
-                    description: Some("Standard identifier."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 21 }),
+                    description: Some(
+                        "Standard identifier.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 21,
+                        },
+                    ),
                     bit_size: 11,
                     array: None,
                     enumm: None,
@@ -824,77 +1458,133 @@ pub(crate) static REGISTERS: IR = IR {
         FieldSet {
             name: "Statr",
             extends: None,
-            description: Some("CAN master status register."),
+            description: Some(
+                "CAN master status register.",
+            ),
             bit_size: 32,
             fields: &[
                 Field {
                     name: "inak",
-                    description: Some("Initialization acknowledge."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 0 }),
+                    description: Some(
+                        "Initialization acknowledge.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 0,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "slak",
-                    description: Some("Sleep acknowledge."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 1 }),
+                    description: Some(
+                        "Sleep acknowledge.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 1,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "erri",
-                    description: Some("Error interrupt."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 2 }),
+                    description: Some(
+                        "Error interrupt.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 2,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "wkui",
-                    description: Some("Wakeup interrupt."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 3 }),
+                    description: Some(
+                        "Wakeup interrupt.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 3,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "slaki",
-                    description: Some("Sleep acknowledge interrupt."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 4 }),
+                    description: Some(
+                        "Sleep acknowledge interrupt.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 4,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "txm",
-                    description: Some("Transmit mode."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 8 }),
+                    description: Some(
+                        "Transmit mode.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 8,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "rxm",
-                    description: Some("Receive mode."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 9 }),
+                    description: Some(
+                        "Receive mode.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 9,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "samp",
-                    description: Some("Last sample point."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 10 }),
+                    description: Some(
+                        "Last sample point.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 10,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "rx",
-                    description: Some("Rx signal."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 11 }),
+                    description: Some(
+                        "Rx signal.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 11,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
@@ -904,71 +1594,170 @@ pub(crate) static REGISTERS: IR = IR {
         FieldSet {
             name: "Tstatr",
             extends: None,
-            description: Some("CAN transmit status register."),
+            description: Some(
+                "CAN transmit status register.",
+            ),
             bit_size: 32,
             fields: &[
                 Field {
                     name: "rqcp",
-                    description: Some("Request completed mailbox0."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 0 }),
+                    description: Some(
+                        "Request completed mailbox0.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 0,
+                        },
+                    ),
                     bit_size: 1,
-                    array: Some(Array::Regular(RegularArray { len: 3, stride: 8 })),
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 3,
+                                stride: 8,
+                            },
+                        ),
+                    ),
                     enumm: None,
                 },
                 Field {
                     name: "txok",
-                    description: Some("Transmission OK of mailbox0."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 1 }),
+                    description: Some(
+                        "Transmission OK of mailbox0.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 1,
+                        },
+                    ),
                     bit_size: 1,
-                    array: Some(Array::Regular(RegularArray { len: 3, stride: 8 })),
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 3,
+                                stride: 8,
+                            },
+                        ),
+                    ),
                     enumm: None,
                 },
                 Field {
                     name: "alst",
-                    description: Some("Arbitration lost for mailbox0."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 2 }),
+                    description: Some(
+                        "Arbitration lost for mailbox0.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 2,
+                        },
+                    ),
                     bit_size: 1,
-                    array: Some(Array::Regular(RegularArray { len: 3, stride: 8 })),
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 3,
+                                stride: 8,
+                            },
+                        ),
+                    ),
                     enumm: None,
                 },
                 Field {
                     name: "terr",
-                    description: Some("Transmission error of mailbox0."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 3 }),
+                    description: Some(
+                        "Transmission error of mailbox0.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 3,
+                        },
+                    ),
                     bit_size: 1,
-                    array: Some(Array::Regular(RegularArray { len: 3, stride: 8 })),
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 3,
+                                stride: 8,
+                            },
+                        ),
+                    ),
                     enumm: None,
                 },
                 Field {
                     name: "abrq",
-                    description: Some("Abort request for mailbox0."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 7 }),
+                    description: Some(
+                        "Abort request for mailbox0.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 7,
+                        },
+                    ),
                     bit_size: 1,
-                    array: Some(Array::Regular(RegularArray { len: 3, stride: 8 })),
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 3,
+                                stride: 8,
+                            },
+                        ),
+                    ),
                     enumm: None,
                 },
                 Field {
                     name: "code",
-                    description: Some("Mailbox code."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 24 }),
+                    description: Some(
+                        "Mailbox code.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 24,
+                        },
+                    ),
                     bit_size: 2,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "tme",
-                    description: Some("Transmit mailbox 0 empty."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 26 }),
+                    description: Some(
+                        "Transmit mailbox 0 empty.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 26,
+                        },
+                    ),
                     bit_size: 1,
-                    array: Some(Array::Regular(RegularArray { len: 3, stride: 1 })),
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 3,
+                                stride: 1,
+                            },
+                        ),
+                    ),
                     enumm: None,
                 },
                 Field {
                     name: "low",
-                    description: Some("Lowest priority flag for mailbox 0."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 29 }),
+                    description: Some(
+                        "Lowest priority flag for mailbox 0.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 29,
+                        },
+                    ),
                     bit_size: 1,
-                    array: Some(Array::Regular(RegularArray { len: 3, stride: 1 })),
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 3,
+                                stride: 1,
+                            },
+                        ),
+                    ),
                     enumm: None,
                 },
             ],
@@ -976,29 +1765,49 @@ pub(crate) static REGISTERS: IR = IR {
         FieldSet {
             name: "Ttctlr",
             extends: None,
-            description: Some("CAN time trigger control register."),
+            description: Some(
+                "CAN time trigger control register.",
+            ),
             bit_size: 32,
             fields: &[
                 Field {
                     name: "timcmv",
-                    description: Some("Internal counter count end value."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 0 }),
+                    description: Some(
+                        "Internal counter count end value.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 0,
+                        },
+                    ),
                     bit_size: 16,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "timrst",
-                    description: Some("Internal counter reset control."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 16 }),
+                    description: Some(
+                        "Internal counter reset control.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 16,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "mode",
-                    description: Some("Time-triggered mode selection."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 17 }),
+                    description: Some(
+                        "Time-triggered mode selection.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 17,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
@@ -1008,57 +1817,111 @@ pub(crate) static REGISTERS: IR = IR {
         FieldSet {
             name: "Txmdhr",
             extends: None,
-            description: Some("CAN mailbox data high register."),
+            description: Some(
+                "CAN mailbox data high register.",
+            ),
             bit_size: 32,
-            fields: &[Field {
-                name: "data",
-                description: Some("Data byte 4."),
-                bit_offset: BitOffset::Regular(RegularBitOffset { offset: 0 }),
-                bit_size: 8,
-                array: Some(Array::Regular(RegularArray { len: 4, stride: 8 })),
-                enumm: None,
-            }],
+            fields: &[
+                Field {
+                    name: "data",
+                    description: Some(
+                        "Data byte 4.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 0,
+                        },
+                    ),
+                    bit_size: 8,
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 4,
+                                stride: 8,
+                            },
+                        ),
+                    ),
+                    enumm: None,
+                },
+            ],
         },
         FieldSet {
             name: "Txmdlr",
             extends: None,
-            description: Some("CAN mailbox data low register."),
+            description: Some(
+                "CAN mailbox data low register.",
+            ),
             bit_size: 32,
-            fields: &[Field {
-                name: "data",
-                description: Some("Data byte 0."),
-                bit_offset: BitOffset::Regular(RegularBitOffset { offset: 0 }),
-                bit_size: 8,
-                array: Some(Array::Regular(RegularArray { len: 4, stride: 8 })),
-                enumm: None,
-            }],
+            fields: &[
+                Field {
+                    name: "data",
+                    description: Some(
+                        "Data byte 0.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 0,
+                        },
+                    ),
+                    bit_size: 8,
+                    array: Some(
+                        Array::Regular(
+                            RegularArray {
+                                len: 4,
+                                stride: 8,
+                            },
+                        ),
+                    ),
+                    enumm: None,
+                },
+            ],
         },
         FieldSet {
             name: "Txmdtr",
             extends: None,
-            description: Some("CAN mailbox data length control and time stamp register."),
+            description: Some(
+                "CAN mailbox data length control and time stamp register.",
+            ),
             bit_size: 32,
             fields: &[
                 Field {
                     name: "dlc",
-                    description: Some("Data length code."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 0 }),
+                    description: Some(
+                        "Data length code.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 0,
+                        },
+                    ),
                     bit_size: 4,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "tgt",
-                    description: Some("Transmit global time."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 8 }),
+                    description: Some(
+                        "Transmit global time.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 8,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "time",
-                    description: Some("Message time stamp."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 16 }),
+                    description: Some(
+                        "Message time stamp.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 16,
+                        },
+                    ),
                     bit_size: 16,
                     array: None,
                     enumm: None,
@@ -1068,45 +1931,77 @@ pub(crate) static REGISTERS: IR = IR {
         FieldSet {
             name: "Txmir",
             extends: None,
-            description: Some("CAN TX mailbox identifier register."),
+            description: Some(
+                "CAN TX mailbox identifier register.",
+            ),
             bit_size: 32,
             fields: &[
                 Field {
                     name: "txrq",
-                    description: Some("Transmit mailbox request."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 0 }),
+                    description: Some(
+                        "Transmit mailbox request.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 0,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "rtr",
-                    description: Some("Remote transmission request."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 1 }),
+                    description: Some(
+                        "Remote transmission request.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 1,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "ide",
-                    description: Some("Identifier extension."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 2 }),
+                    description: Some(
+                        "Identifier extension.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 2,
+                        },
+                    ),
                     bit_size: 1,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "exid",
-                    description: Some("extended identifier."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 3 }),
+                    description: Some(
+                        "extended identifier.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 3,
+                        },
+                    ),
                     bit_size: 18,
                     array: None,
                     enumm: None,
                 },
                 Field {
                     name: "stid",
-                    description: Some("Standard identifier."),
-                    bit_offset: BitOffset::Regular(RegularBitOffset { offset: 21 }),
+                    description: Some(
+                        "Standard identifier.",
+                    ),
+                    bit_offset: BitOffset::Regular(
+                        RegularBitOffset {
+                            offset: 21,
+                        },
+                    ),
                     bit_size: 11,
                     array: None,
                     enumm: None,
@@ -1116,3 +2011,4 @@ pub(crate) static REGISTERS: IR = IR {
     ],
     enums: &[],
 };
+                
